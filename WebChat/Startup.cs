@@ -11,11 +11,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using WebChat.Database;
 using WebChat.Domain;
+using WebChat.Domain.Entities;
 using WebChat.Domain.Interfaces;
+using WebChat.Domain.Models;
 using WebChat.Middleware;
 using WebChat.Services;
+using WebChat.Validators;
 
 namespace WebChat
 {
@@ -33,8 +39,10 @@ namespace WebChat
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddFluentValidation();
+
             // VALIDATORS 
-            services.AddControllers();
+            services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 
             // SERVICES
             services.AddScoped<IAccountService, AccountService>();
@@ -62,6 +70,7 @@ namespace WebChat
             });
 
             // AUTHENTICATION
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             var authenticationSettings = new AuthenticationSettings();
             services.AddSingleton(authenticationSettings);
             Configuration.GetSection("Authentication").Bind(authenticationSettings);
@@ -83,8 +92,6 @@ namespace WebChat
             });
 
             // AUTHORIZATION
-            services.AddScoped<IAuthorizationHandler,AuthorizationHandler> ();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

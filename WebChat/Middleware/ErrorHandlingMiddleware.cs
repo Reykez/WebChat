@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using WebChat.Database.Exceptions;
 
 namespace WebChat.Middleware
 {
@@ -14,13 +13,17 @@ namespace WebChat.Middleware
             {
                 await next.Invoke(context);
             }
+            catch (BadRequestException e)
+            {
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync(e.Message);
+            }
             catch(Exception e)
             {
-                Console.Write($"uknown error: {e.Message}");
+                Console.Write($"unknown error: {e.Message}");
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Something went wrong");
             }
-            throw new NotImplementedException();
         }
     }
 }
