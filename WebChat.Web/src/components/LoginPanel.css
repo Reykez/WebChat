@@ -1,0 +1,24 @@
+.login-panel {
+    margin: auto;
+    width: 600px;
+    margin-top: 2%;
+    border: 5px solid #bbb;
+    border-radius: 10px;
+}
+
+.login-form {
+    text-align:left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.login-panel h2 {
+    color: black;
+    text-align: center;
+}
+
+.login-panel .input-text {
+    margin-bottom: 15px;
+}

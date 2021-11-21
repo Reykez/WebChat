@@ -1,3 +1,5 @@
+import './UserList.css';
+
 export const UserList = ({users, changeChat, sender, receiver}) => {
     return (
         <div className="user-list">

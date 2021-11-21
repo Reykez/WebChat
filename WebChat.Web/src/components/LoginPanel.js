@@ -1,5 +1,6 @@
 import {React, useState} from 'react'
 import {Form, Button} from 'react-bootstrap';
+import './LoginPanel.css';
 
 export const LoginPanel = ({connect}) => {
     const [username, setUsername] = useState();
@@ -29,22 +30,25 @@ export const LoginPanel = ({connect}) => {
                 password
             }) 
         });
-        //console.log(tok);
-        //console.log(await tok.text());
         return fetchRequest;
     }
 
     return (
-        <Form className="login-panel"
-            onSubmit={e => {
-                e.preventDefault();
-                handleSubmit();
-            }}>
-            <Form.Group>
-                <Form.Control placeholder="Username" onChange={e => setUsername(e.target.value)}/>
-                <Form.Control placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-            </Form.Group>
-            <Button variant="success" type="submit" disabled={!username || !password}>Join</Button>
-        </Form>
+        <div className="login-panel">
+            <Form className="login-form d-grid gap-2"
+                onSubmit={e => {
+                    e.preventDefault();
+                    handleSubmit();
+                }}>
+                <h2> Sign In </h2>
+                <Form.Group className="">
+                    <Form.Label> Username </Form.Label>
+                    <Form.Control className="input-text" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
+                    <Form.Label> Password </Form.Label>
+                    <Form.Control className="input-text" placeholder="Password" type="password" onChange={e => setPassword(e.target.value)}/>
+                </Form.Group>
+                <Button variant="success" type="submit" size="lg" disabled={!username || !password}>Join</Button>
+            </Form>       
+        </div>
     );
 }

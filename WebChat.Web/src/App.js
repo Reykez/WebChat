@@ -20,13 +20,12 @@ function App() {
             const con = new HubConnectionBuilder()
                 .withUrl("https://localhost:5001/chat", {
                     accessTokenFactory: () => token
-                    //headers: {"Authorization" : `Bearer ${jwtToken}`}
                 })
                 .configureLogging(LogLevel.Information)
                 .build();
 
-            con.on("ReceiveMessage", (sender, receiver, message) => {
-                setMessages(messages => [...messages, { sender, receiver, message }]);
+            con.on("ReceiveMessage", (sender, receiver, message, timestamp) => {
+                setMessages(messages => [...messages, { sender, receiver, message, timestamp}]);
             });
 
             con.on("AvailableUsers", (users) => {

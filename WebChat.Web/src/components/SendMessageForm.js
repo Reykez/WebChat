@@ -1,5 +1,6 @@
 import {Form, Button, FormControl, InputGroup} from 'react-bootstrap';
 import {useState} from 'react';
+import "./SendMessageForm.css";
 
 export const SendMessageForm = ({sendMessage, mReceiver}) => {
     const [message, setMessage] = useState('');
@@ -11,8 +12,8 @@ export const SendMessageForm = ({sendMessage, mReceiver}) => {
                 sendMessage(message, mReceiver);
                 setMessage('');
             }}>
-            <InputGroup>
-                <FormControl type="user" placeholder="type message" 
+            <InputGroup className="input-group">
+                <FormControl type="user" placeholder="Type message" 
                     onChange={e => setMessage(e.target.value)} value={message} />
                     <Button variant="primary" type="submit" disabled={!message}>Send</Button>
             </InputGroup>

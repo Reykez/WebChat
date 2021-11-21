@@ -52,14 +52,20 @@ namespace WebChat.Hubs
         {
             var username = Context.User.FindFirst(ClaimTypes.Name).Value;
 
-            await Clients.Group(username).SendAsync("ReceiveMessage", username, userMessage.Receiver, userMessage.Message);
-            await Clients.Group(userMessage.Receiver).SendAsync("ReceiveMessage", username, userMessage.Receiver, userMessage.Message);
+            if (!_dbContext.Users.Any(r => r.Username == userMessage.Receiver))
+                return;
+
+            var timestamp = DateTime.Now;
+            var timestampFormatted = timestamp.ToString("dd MMMM, HH:mm");
+
+            await Clients.Group(username).SendAsync("ReceiveMessage", username, userMessage.Receiver, userMessage.Message, timestampFormatted);
+            await Clients.Group(userMessage.Receiver).SendAsync("ReceiveMessage", username, userMessage.Receiver, userMessage.Message, timestampFormatted);
             _dbContext.Messages.Add(new Message()
             {
                 Sender = _dbContext.Users.First(r => r.Username == username),
                 Receiver = _dbContext.Users.First(r => r.Username == userMessage.Receiver),
                 Content = userMessage.Message,
-                TimeStamp = DateTime.Now
+                TimeStamp = timestamp
             });
             _dbContext.SaveChanges();
         }
@@ -85,7 +91,7 @@ namespace WebChat.Hubs
 
             foreach (var message in messages)
             {
-                await Clients.Caller.SendAsync("ReceiveMessage", message.Sender.Username, message.Receiver.Username, message.Content);
+                await Clients.Caller.SendAsync("ReceiveMessage", message.Sender.Username, message.Receiver.Username, message.Content, message.TimeStamp.ToString("dd MMMM, HH:mm"));
             }
         } 
 

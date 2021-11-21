@@ -1,0 +1,28 @@
+/* UserList CSS */
+.user-list {
+    float: left;
+    padding-top: 20px;
+    background-color: #313131;
+    color: white;
+    width: 200px;
+    height: 458px;
+    margin-right: 4px;
+}
+
+.user-list-element {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition-duration: 0.25s;
+}
+  
+.selected {
+    background-color: #316631;
+}
+  
+.user-list-element:hover {
+    background-color: #555555;
+}
+
+.send-message-mock {
+    height: 38px;
+}

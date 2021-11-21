@@ -1,0 +1,21 @@
+.chat-panel {
+    margin: auto;
+    width: 750px;
+    margin-top: 2%;
+    text-align: center;
+
+    border: 5px solid #bbb;
+    border-radius: 10px;
+
+    position: relative;
+}
+
+.chat-panel .top-nav-bar {
+    display: flex;
+}
+
+.chat-panel .top-nav-bar .element {
+    margin: auto;
+    padding: 15px;
+    flex: 1;
+}

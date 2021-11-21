@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import './MessageContainer.css';
 
 export const MessageContainer = ({messages, room}) => {
     const messageRef = useRef();
@@ -17,8 +18,8 @@ export const MessageContainer = ({messages, room}) => {
                     if(m.sender == room || m.receiver == room) {
                         return (
                             <div key={index} className="user-message">
-                            <div className="message">{m.message}</div>
-                            <div className="from-user">{m.sender}</div>
+                                <div className="message-text">{m.message}</div>
+                                <div className="from-user">{m.sender} - {m.timestamp}</div>
                             </div>  
                         ) 
                     }
