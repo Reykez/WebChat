@@ -15,7 +15,7 @@ namespace WebChat.Middleware
             }
             catch (BadRequestException e)
             {
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(e.Message);
             }
             catch(Exception e)

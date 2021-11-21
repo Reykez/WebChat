@@ -1,33 +1,26 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using WebChat.Database;
 using WebChat.Domain;
 using WebChat.Domain.Entities;
 using WebChat.Domain.Interfaces;
 using WebChat.Domain.Models;
+using WebChat.Hubs;
 using WebChat.Middleware;
 using WebChat.Services;
 using WebChat.Validators;
 
 namespace WebChat
 {
-    // Implement the observer (to be able to notify all objects of state)
-    // Or directly download from database (with refresh || notify when online?) - to research. 
-
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -41,12 +34,15 @@ namespace WebChat
         {
             services.AddControllers().AddFluentValidation();
 
+            // SignalR
+            services.AddSignalR();
+            services.AddSingleton<IDictionary<string, UserConnection>>(options => new Dictionary<string, UserConnection>());
+
             // VALIDATORS 
             services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 
             // SERVICES
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IMessageService, MessageService>();
 
             // DATABASE
             services.AddDbContext<WebChatDbContext>(options
@@ -66,7 +62,8 @@ namespace WebChat
                 options.AddPolicy("FrontEndClientIntegration", builder =>
                     builder.AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowAnyOrigin());
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:3000"));
             });
 
             // AUTHENTICATION
@@ -97,7 +94,7 @@ namespace WebChat
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("FrontEndIntegration");
+            app.UseCors("FrontEndClientIntegration");
             /* if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -107,7 +104,7 @@ namespace WebChat
 
             app.UseMiddleware<ErrorHandlingMiddleware>();  
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -119,6 +116,7 @@ namespace WebChat
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chat");
                 endpoints.MapControllers();
             });
         }
