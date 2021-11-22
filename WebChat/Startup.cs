@@ -60,10 +60,10 @@ namespace WebChat
             services.AddCors(options =>
             {
                 options.AddPolicy("FrontEndClientIntegration", builder =>
-                    builder.AllowAnyMethod()
+                    builder.AllowCredentials()
+                        .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowCredentials()
-                        .WithOrigins(Configuration["CORS:FrontEndClientIntegrationUrl"]));
+                        .SetIsOriginAllowed(hostName => true));
             });
 
             // AUTHENTICATION
@@ -104,7 +104,7 @@ namespace WebChat
 
             app.UseMiddleware<ErrorHandlingMiddleware>();  
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
