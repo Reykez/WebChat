@@ -7,7 +7,7 @@ It communicates between server and clients via SignalR with JWT authentication. 
 ## Requirements & Installation
 To run this program you need `npm`, `dotnet`, and `mssql` server. 
 
-1. Run the frontend (`WebChat.Web` directory) with npm server on `3000` port. In other case, you must change CORS settings in `WebChat/appsettings.Development.json` file before run the project.
+1. Run the frontend (`WebChat.Web` directory) with npm server.
 2. Compile and run the backend. It should use `https` protocol and `5001` port. In other case, you must change hub connection settings in `WebChat.Web/src/App.js`. Compile solution with visual studio is recommended (instead of it you can use `dotnet /build` command). 
 
 If you want change the DB connection string or JWT settings, look at `WebChat/appsettings.Development.json` file. 
