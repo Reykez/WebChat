@@ -68,11 +68,23 @@ function App() {
         }
     }
 
+    const getMessages = async(receiver) => {
+        try {
+            setMessages([]);
+            console.log(`receiver: ${receiver}`)
+            await connection.invoke("GetMessages", receiver);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <div className="App">
             {!connection
                 ? <LoginPanel connect={connect} />
-                : <ChatPanel sendMessage={sendMessage} messages={messages} users={users} logOut={logOut} sender={username} receiver={receiver} changeReceiver={setReceiver} connect={connect} />
+                : <ChatPanel getMessages={getMessages} messages={messages}
+                    sendMessage={sendMessage} users={users} logOut={logOut} 
+                    sender={username} receiver={receiver} changeReceiver={setReceiver} />
             }
         </div>
     );

@@ -45,7 +45,7 @@ namespace WebChat.Hubs
             _connections[Context.ConnectionId] = userConnection; 
 
             await SendAllUsers();
-            await SendMessagesFromDatabase(username);
+            //await SendMessagesFromDatabase(username);
         }
 
         public async Task SendMessage(UserMessage userMessage)
@@ -77,7 +77,9 @@ namespace WebChat.Hubs
             return Clients.Caller.SendAsync("AvailableUsers", users);
         }
 
-        public async Task SendMessagesFromDatabase(string sender)
+        // Instead of sending messages each receiver when user opens chat,
+        // you can use this function to send all messages intended to user on login
+        private async Task SendMessagesFromDatabase(string sender)
         {
             if (!_dbContext.Users.Any(r => r.Username == sender))
                 return;
@@ -94,6 +96,27 @@ namespace WebChat.Hubs
                 await Clients.Caller.SendAsync("ReceiveMessage", message.Sender.Username, message.Receiver.Username, message.Content, message.TimeStamp.ToString("dd MMMM, HH:mm"));
             }
         } 
+
+        public async Task GetMessages(string receiver)
+        {
+            var username = Context.User.FindFirst(ClaimTypes.Name).Value;
+            if (!_dbContext.Users.Any(r => r.Username == receiver) ||
+                !_dbContext.Users.Any(r => r.Username == username))
+                return;
+
+            var messages = _dbContext.Messages
+                .Include(r => r.Sender)
+                .Include(r => r.Receiver)
+                .Where(r => (r.Sender.Username == username && r.Receiver.Username == receiver) ||
+                            (r.Sender.Username == receiver && r.Receiver.Username == username))
+                .OrderBy(r => r.TimeStamp)
+                .ToList();
+
+            foreach(var message in messages)
+            {
+                await Clients.Caller.SendAsync("ReceiveMessage", message.Sender.Username, message.Receiver.Username, message.Content, message.TimeStamp.ToString("dd MMMM, HH:mm"));
+            }
+        }
 
     }
 }

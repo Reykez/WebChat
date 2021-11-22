@@ -6,10 +6,10 @@ import { UserList } from './UserList';
 import { Button } from 'react-bootstrap';
 import './ChatPanel.css';
 
-export const ChatPanel = ({sendMessage, messages, users, receiver, logOut, sender, changeReceiver}) => {
+export const ChatPanel = ({sendMessage, messages, users, receiver, logOut, sender, changeReceiver, getMessages}) => {
     return (
         <div className="chat-panel">
-            <UserList users={users} sender={sender} receiver={receiver} changeChat={changeReceiver}/>
+            <UserList users={users} sender={sender} receiver={receiver} changeChat={changeReceiver} getMessages={getMessages}/>
             <div className="top-nav-bar">
                 <h2 className="element">
                     {sender}
