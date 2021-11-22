@@ -63,7 +63,7 @@ namespace WebChat
                     builder.AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithOrigins("http://localhost:3000"));
+                        .WithOrigins(Configuration["CORS:FrontEndClientIntegrationUrl"]));
             });
 
             // AUTHENTICATION
