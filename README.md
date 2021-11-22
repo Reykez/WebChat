@@ -1,8 +1,8 @@
 ## About project
 WebChat is a simple chatting app writed for learning purposes.
 It communicates between server and clients via SignalR with JWT authentication. <br>
-<img width="461" alt="image" src="https://user-images.githubusercontent.com/44320848/142842039-4cf6262a-6eef-446f-91de-8430f46c8095.png"> &emsp; &emsp;
-<img width="400" alt="image" src="https://user-images.githubusercontent.com/44320848/142842017-882cee96-7951-4e8a-a5d8-d1356925d91f.png">
+<img width="300" alt="image" src="https://user-images.githubusercontent.com/44320848/142842039-4cf6262a-6eef-446f-91de-8430f46c8095.png"> &emsp; &emsp;
+<img width="300" alt="image" src="https://user-images.githubusercontent.com/44320848/142842017-882cee96-7951-4e8a-a5d8-d1356925d91f.png">
 
 ## Requirements & Installation
 To run this program you need `npm`, `dotnet`, and `mssql` server. 
