@@ -19,12 +19,12 @@ export const MessageContainer = ({messages, room, user}) => {
                 {
                     let classNames = ["user-message"];
                     if(isFirst) { isFirst = false; classNames.push("first"); }
-                    if(m.sender == user) {
+                    if(m.sender === user) {
                         classNames.push("right")
                     }
                     
 
-                    if(m.sender == room || m.receiver == room) {
+                    if(m.sender === room || m.receiver === room) {
                         return (
                             <div key={index} className={classNames.join(' ')}>
                                 <div className="message-text">{m.message}</div>
@@ -32,6 +32,7 @@ export const MessageContainer = ({messages, room, user}) => {
                             </div>   
                         )
                     }
+                    return(null);
                 }
             )}
         </div>

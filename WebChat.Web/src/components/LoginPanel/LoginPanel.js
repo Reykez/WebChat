@@ -1,21 +1,40 @@
 import {React, useState} from 'react'
 import {Form, Button} from 'react-bootstrap';
+import { tsParticles } from 'tsparticles';
 import './LoginPanel.css';
 
-export const LoginPanel = ({connect}) => {
+export const LoginPanel = ({connect, setOnlyRed}) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
+    }
 
     const handleSubmit = async () => {
         console.log(`Username: ${username}, password: ${password}`);
 
         var token = await getFetch();
-        if(await token.status == 200) {
+        if(await token.status === 200) {
             var tokenText = await token.text();
             console.log(`Success, token: ${tokenText}`);
             var connectResult = await connect(username, tokenText);
         }
         else {
+            const particles = tsParticles.domItem(0);
+            const emitterNormal = particles.plugins.get("emitters").array[0];
+            const emitterRed = particles.plugins.get("emitters").array[1];
+
+            emitterNormal.pause();
+            await timeout(200);
+            emitterRed.emitterOptions.rate.quantity = 9;
+            emitterRed.play();
+
+            await timeout(5500);
+            emitterRed.pause();
+            emitterRed.emitterOptions.rate.quantity = 0;
+            await timeout(1500);
+            emitterNormal.play();
         }
     } 
 

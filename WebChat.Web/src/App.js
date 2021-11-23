@@ -6,6 +6,7 @@ import { ChatPanel } from './components/ChatPanel/ChatPanel.js';
 import { ParticlesContainer } from './components/LoginPanel/ParticlesContainer.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { tsParticles } from 'tsparticles';
 function App() {
     const [connection, setConnection] = useState();
     const [messages, setMessages] = useState([]);
@@ -13,6 +14,8 @@ function App() {
 
     const [username, setUsername] = useState("none");
     const [receiver, setReceiver] = useState("none");
+
+    const [onlyRed, setOnlyRed] = useState(false);
 
     const connect = async (sender, token) => {
         try {
@@ -64,6 +67,7 @@ function App() {
             setUsers([]);
             setUsername("none");
             setReceiver("none");
+            window.location.reload();
         } catch (e) {
             console.log(e);
         }
@@ -85,8 +89,8 @@ function App() {
         <div>
             {!connection
                 ? <div className="App"> 
-                    <div className="graphic"><ParticlesContainer /> </div>
-                    <div className="content"><LoginPanel connect={connect}/></div>
+                    <div className="graphic"><ParticlesContainer onlyRed={onlyRed}/> </div>
+                    <div className="content"><LoginPanel connect={connect} setOnlyRed={setOnlyRed}/></div>
                   </div>
                 : <ChatPanel getMessages={getMessages} messages={messages}
                     sendMessage={sendMessage} users={users} logOut={logOut} 

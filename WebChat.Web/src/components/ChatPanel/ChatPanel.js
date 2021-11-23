@@ -18,12 +18,12 @@ export const ChatPanel = ({sendMessage, messages, users, receiver, logOut, sende
                     <Button className="logout-button" variant='danger' onClick={() => logOut()}>Logout</Button>
                 </h2>
                 <h2 className="element">
-                    {receiver != "none" ? receiver : <div></div>}
+                    {receiver !== "none" ? receiver : <div></div>}
                 </h2>
             </div>
             <div className="message-box">
                 <MessageContainer messages={messages} room={receiver} user={sender}/>
-                {receiver != "none" ? (<SendMessageForm sendMessage={sendMessage} mReceiver={receiver}/>) : (<div className="send-message-mock"></div>) }
+                {receiver !== "none" ? (<SendMessageForm sendMessage={sendMessage} mReceiver={receiver}/>) : (<div className="send-message-mock"></div>) }
             </div>
         </div>
     );

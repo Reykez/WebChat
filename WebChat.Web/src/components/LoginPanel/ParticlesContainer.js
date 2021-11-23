@@ -1,13 +1,13 @@
 import Particles from 'react-tsparticles';
+import { tsParticles } from 'tsparticles';
+import React from 'react';
 
-export const ParticlesContainer = () => {
+export const ParticlesContainer = (onlyRed) => {
 
     const particlesInit = (main) => {
-        console.log(main);
     };
 
     const particlesLoaded = (container) => {
-        console.log(container);
     };
 
     return (
@@ -59,38 +59,72 @@ export const ParticlesContainer = () => {
                     }
                   },
                   detectRetina: true,
-                  emitters: {
-                    direction: "none",
-                    rate: {
-                      delay: 0.25,
-                      quantity: 10
-                    },
-                    position: {
-                      x: 50,
-                      y: 50
-                    },
-                    size: {
-                      width: 0,
-                      height: 0
-                    },
-                    spawnColor: {
-                      value: "#ff0000",
-                      animation: {
-                        h: {
-                          enable: true,
-                          speed: 5
-                        },
-                        l: {
-                          enable: true,
-                          speed: 0,
-                          offset: {
-                            min: 20,
-                            max: 80
+                  emitters: [
+                    {
+                      direction: "none",
+                      rate: {
+                        delay: 0.25,
+                        quantity: 10
+                      },
+                      position: {
+                        x: 50,
+                        y: 50
+                      },
+                      size: {
+                        width: 0,
+                        height: 0
+                      },
+                      spawnColor: {
+                        value: "#ff0000",
+                        animation: {
+                          h: {
+                            enable: true,
+                            speed: 5
+                          },
+                          l: {
+                            enable: true,
+                            speed: 0,
+                            offset: {
+                              min: 20,
+                              max: 80
+                            }
                           }
                         }
                       }
-                    }
-                }
+                    },
+                    {
+                      direction: "none",
+                      rate: {
+                        delay: 0.25,
+                        quantity: 0
+                      },
+                      position: {
+                        x: 50,
+                        y: 50
+                      },
+                      size: {
+                        width: 0,
+                        height: 0
+                      },
+                      spawnColor: {
+                        value: "#ff0000",
+                        animation: {
+                          h: {
+                            enable: false,
+                            speed: 5
+                          },
+                          l: {
+                            enable: true,
+                            speed: 0,
+                            offset: {
+                              min: 1,
+                              max: 2
+                            },
+                          }
+                        }
+                      }
+                    },
+                  ]
             }}
         />
     );
