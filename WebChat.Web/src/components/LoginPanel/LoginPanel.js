@@ -13,10 +13,9 @@ export const LoginPanel = ({connect}) => {
         if(await token.status == 200) {
             var tokenText = await token.text();
             console.log(`Success, token: ${tokenText}`);
-            connect(username, tokenText);
+            var connectResult = await connect(username, tokenText);
         }
         else {
-            console.log(`Error :c `);
         }
     } 
 
@@ -41,13 +40,13 @@ export const LoginPanel = ({connect}) => {
                     handleSubmit();
                 }}>
                 <h2> Sign In </h2>
-                <Form.Group className="">
+                <Form.Group>
                     <Form.Label> Username </Form.Label>
                     <Form.Control className="input-text" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
                     <Form.Label> Password </Form.Label>
                     <Form.Control className="input-text" placeholder="Password" type="password" onChange={e => setPassword(e.target.value)}/>
                 </Form.Group>
-                <Button variant="success" type="submit" size="lg" disabled={!username || !password}>Join</Button>
+                <Button className="submit-button" variant="success" type="submit" size="lg" disabled={!username || !password}>Join</Button>
             </Form>       
         </div>
     );

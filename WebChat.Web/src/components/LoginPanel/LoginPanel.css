@@ -1,0 +1,38 @@
+.login-panel {
+    color: #fff;
+    margin: auto;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2%;
+}
+
+.login-form {
+    text-align:left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.login-panel h2 {
+    text-align: center;
+}
+
+.login-panel .input-text {
+    margin-bottom: 25px;
+    border: none;
+    background-color: transparent;
+    color: #ffffff;
+    transition: 0.25s;
+}
+
+.login-panel .input-text:focus {
+    background-color: transparent;
+    color: #eee;
+    font-size: 18px;
+    transition: 0.25s;
+}
+
+.login-panel .submit-button {
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: 1s;
+}

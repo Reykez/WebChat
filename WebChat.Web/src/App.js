@@ -1,12 +1,11 @@
 import React from 'react';
-import './App.css';
 import { useState } from 'react';
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { LoginPanel } from './components/LoginPanel/LoginPanel.js';
+import { ChatPanel } from './components/ChatPanel/ChatPanel.js';
+import { ParticlesContainer } from './components/LoginPanel/ParticlesContainer.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { LoginPanel } from './components/LoginPanel.js';
-import { ChatPanel } from './components/ChatPanel.js';
-
+import './App.css';
 function App() {
     const [connection, setConnection] = useState();
     const [messages, setMessages] = useState([]);
@@ -44,6 +43,8 @@ function App() {
             setUsername(sender);
             setReceiver(receiver);
             setConnection(con);
+
+            return true;
         } catch (e) {
             console.log(e);
         }
@@ -78,10 +79,15 @@ function App() {
         }
     }
 
+    document.body.style= 'background: #030518;';
+    
     return (
-        <div className="App">
+        <div>
             {!connection
-                ? <LoginPanel connect={connect} />
+                ? <div className="App"> 
+                    <div className="graphic"><ParticlesContainer /> </div>
+                    <div className="content"><LoginPanel connect={connect}/></div>
+                  </div>
                 : <ChatPanel getMessages={getMessages} messages={messages}
                     sendMessage={sendMessage} users={users} logOut={logOut} 
                     sender={username} receiver={receiver} changeReceiver={setReceiver} />

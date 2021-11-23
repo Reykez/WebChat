@@ -1,0 +1,24 @@
+.App {
+    display: flex;
+    background-color: #030518;
+    height: 100vh;
+}
+
+.App .graphic {
+    margin: auto;
+    flex: 60%;
+}
+
+.App .content {
+    flex: 40%;
+    margin: auto;
+}
+
+@media only screen and (max-width: 800px) {
+    .App .graphic {
+        flex: 0%;
+    }
+    .App .content {
+        flex: 100%;
+    }
+}

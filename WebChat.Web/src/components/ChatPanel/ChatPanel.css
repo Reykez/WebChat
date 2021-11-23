@@ -1,0 +1,46 @@
+.chat-panel {
+    display: grid;
+    grid-template-columns: 1fr 8fr;
+    grid-auto-rows: 0.6fr 8fr;
+    grid-template-areas: "left-area top-area"
+                         "left-area middle-area";
+
+    margin: auto;
+    text-align: center;
+
+    height: 100vh;
+    max-height: 100vh;
+
+    position: relative;
+}
+
+.chat-panel .top-nav-bar {
+    grid-area: top-area;
+    display: inline-flex;
+    padding: 10px;
+
+    color: #eee;
+}
+
+.chat-panel .top-nav-bar .element {
+    flex: 1;
+    margin: auto;
+}
+
+.chat-panel .top-nav-bar .element .logout-button {
+    margin-top: -5px;
+}
+
+.chat-panel .left-nav-bar {
+    grid-area: left-area;
+    background-color: #222431;
+}
+
+.chat-panel .message-box {
+    grid-area: middle-area;
+    
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    max-height: 100%;
+}

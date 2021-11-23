@@ -13,7 +13,7 @@ export const SendMessageForm = ({sendMessage, mReceiver}) => {
                 setMessage('');
             }}>
             <InputGroup className="input-group">
-                <FormControl type="user" placeholder="Type message" 
+                <FormControl className="input-field" type="user" placeholder="Type message" 
                     onChange={e => setMessage(e.target.value)} value={message} />
                     <Button variant="primary" type="submit" disabled={!message}>Send</Button>
             </InputGroup>
